@@ -19,8 +19,8 @@ for filepath in filepaths:
     
 
     pdf.set_font(family="helvetica", style="B", size=16)
-    pdf.cell(w=65, h= 10, border=1, ln=1, align="L", txt=f"Invoice No:{invoice_no}")
-    pdf.cell(w=55, h= 10, border=1, ln=1, align="L", txt=f"Date:{date}")
+    pdf.cell(w=65, h= 10, ln=1, align="L", txt=f"Invoice No:{invoice_no}")
+    pdf.cell(w=55, h= 10, ln=1, align="L", txt=f"Date:{date}")
     
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
     print(list(df.columns))
@@ -39,6 +39,21 @@ for filepath in filepaths:
         pdf.cell(w=32, h= 8, txt=str(row["price_per_unit"]), border=1)
         pdf.cell(w=32, h= 8, txt=str(row["total_price"]), border=1, ln=1)
     
+    total_price =  df["total_price"].sum()
+    pdf.cell(w=32, h=8, txt='', border=1)
+    pdf.cell(w=60, h= 8, txt="", border=1)
+    pdf.cell(w=32, h= 8, txt="", border=1)
+    pdf.cell(w=32, h= 8, txt="", border=1)
+    pdf.set_font(family="Helvetica", size=9, style="B")
+    pdf.cell(w=32, h= 8, txt=str(total_price), border=1, ln=1)
+
+    pdf.set_font(family="Helvetica", size=12, style="B")
+    pdf.cell(w=30, h=16, txt=f"The Total price is {total_price}", ln=1 )
+
+    pdf.set_font(family="Helvetica", size=15, style="B")
+    pdf.cell(w=30, ln=1, h=20)
+    pdf.cell(w=30, h=8, txt=f"Maruty Polymath")
+
     pdf.output(f"PDFs/{filename}.pdf")
     
         
